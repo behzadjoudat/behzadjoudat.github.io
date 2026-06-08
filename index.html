@@ -1,69 +1,272 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Behzad Joudat</title>
-	<meta name="description" content="Behzad Joudat - Personal Profile" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Behzad Joudat — Academic Portfolio</title>
 
-	<!-- Font Awesome for icons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css" />
 
-	<!-- Link to external CSS -->
-	<link rel="stylesheet" href="style.css">
+  <style>
+    /* Dynamic Margins and Width Constraints */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Limits the maximum width for readability and centers the content */
+    .navbar, header#home, main, footer {
+      max-width:  1200;
+      margin: 0 auto;
+      padding-left: 5vw;  /* Dynamic spacing that scales with screen size */
+      padding-right: 10vw;
+    }
+
+    /* Gallery Grid Styles */
+    .gallery-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .gallery-item {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Lightbox (Modal) Styles */
+    .modal {
+      display: none; 
+      position: fixed; 
+      z-index: 1000; 
+      padding-top: 50px; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%; 
+      overflow: auto; 
+      background-color: rgba(0,0,0,0.85); 
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      max-height: 80vh;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      animation: zoomIn 0.3s ease;
+    }
+
+    @keyframes zoomIn {
+      from {transform: scale(0.9); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .close-modal:hover,
+    .close-modal:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
-	<header>
-		<h1>Behzad Joudat</h1>
-		<nav>
-			<ul>
-				<li><a href="#about">About</a></li>
-				<li><a href="#research">Research</a></li>
-				<li><a href="#contact">Contact</a></li>
-			</ul>
-		</nav>
-	</header>
 
-	<main>
-		<section id="about">
-			<h2><i class="fas fa-user"></i> About Me</h2>
-			<div class="about-content">
-				<img src="./behzad1.jpg" alt="Picture of Behzad Joudat" width="300">
-				<div class="about-text">
-					<p>
-Welcome to my Webpage. I am Behzad Joudat, a third-year PhD candidate in Computer Science with an emphasis on Hardware Security at Thomas J. Watson School of Engineering and Applied Science, Binghamton University.
-<br> I have over five years of experience in computer hardware, embedded systems, and FPGA design. Skilled in FPGA development, system verification, and machine learning acceleration using C, Python, VHDL, Verilog, Vivado, and Quartus. Adept at bridging software and hardware for optimized, high-performance, and energy-efficient solutions.
-					</p>
-					<p><strong>My research interests include:</strong></p>
-					<ul>
-						<li>Computer Architecture</li>
-						<li>Hardware Security</li>
-						<li>Microarchitectural Side-Channels</li>
-						<li>ASIC & FPGA design</li>
-						<li>Embedded Systems</li>
-					</ul>
-				</div>
-			</div>
-		</section>
-		
-		<section id="research">
-			<h2><i class="fas fa-lightbulb"></i> Research</h2>
-			<p>My recent research focuses on FPGA-based architectures, with an emphasis on power monitoring and side-channel attack analysis. I explore how hardware-level implementations can be optimized for performance and energy efficiency while maintaining robust security. By leveraging real-time power measurements and FPGA prototyping, my work aims to uncover and mitigate vulnerabilities arising from power side channels, contributing to the development of more secure and trustworthy hardware systems.</p>
-		</section>
-    
-		<section id="contact">
-			<h2><i class="fas fa-envelope"></i> Contact</h2>
-			<p>You can connect with me via the following email or LinkedIn:</p>
-		</section>
-
-     <div id="contact1" class="contact-icons-footer fade-section">
-      <a href="mailto:bjoudat1@binghamton.edu" title="Email"><i class="fas fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/behzadjoudat" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/behzadjoudat" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+  <nav class="navbar">
+    <div class="nav-left">
+      <span class="nav-title">Behzad Joudat</span>
     </div>
-	</main>
 
-	<footer>
-		<p>&copy; 2025</p>
-	</footer>
+    <div class="nav-center">
+      <a href="#home"><i class="fas fa-house"></i> Home</a>
+      <a href="#research"><i class="fas fa-lightbulb"></i> Research</a>
+      <a href="#experience-and-leadership"><i class="fas fa-route"></i> Journey</a>
+      <a href="#personal"><i class="fas fa-camera-retro"></i> Personal</a>
+      <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+  </nav>
+
+  <header id="home">
+    <div class="header-left">
+      <img src="behzad1.jpg" alt="Behzad Joudat Photo">
+    </div>
+
+    <div class="header-center">
+      <h1>About Me</h1>
+      <p class="subtitle">PhD Candidate · Computer Science · FPGA Design & Embedded Systems · Hardware Security</p>
+
+      <p class="about-inline">
+      Welcome to my Webpage. I am Behzad Joudat, a Ph.D. candidate in Computer Science with an emphasis on Hardware Security at Thomas J. Watson School of Engineering and Applied Science, Binghamton University.
+<br> With over five years of experience in hardware and embedded systems engineering, I specialize in FPGA design, system verification, and hardware acceleration for machine learning. Skilled in C, Python, VHDL, Verilog, Vivado, and Quartus, I develop high-performance, power-efficient solutions that seamlessly bridge software and hardware.
+      </p>
+      <h2><i class="fas fa-flask"></i> Research Interests</h2>
+      <ul>
+        <li>Computer Architecture</li>
+        <li>Embedded Systems</li>
+        <li>Hardware Security</li>
+        <li>ASIC & FPGA design</li>
+        <li>Microarchitectural Side-Channels</li>
+      </ul>
+
+      <h2><i class="fas fa-code"></i> Technical Skills</h2>
+      <ul>
+        <li><strong>Languages:</strong> C, C++, Python, VHDL, Verilog, SystemVerilog</li>
+        <li><strong>Tools:</strong> OpenVino, Vivado (Xilinx), Quartus, Git, FPGA design and verification, TCL, Make/CMake, Shell, RTL</li>
+        <li><strong>Additional:</strong> Reconfigurable Architectures, Embedded system, OpenCL, Machine Learning, Firmware</li>
+      </ul>
+
+    </div>
+  </header>
+
+  <main>
+  
+  <section id="research">
+      <h2><i class="fas fa-lightbulb"></i> Research</h2>
+      <p>My recent research focuses on FPGA-based architectures, with an emphasis on power monitoring and side-channel attack analysis. I explore how hardware-level implementations can be optimized for performance and energy efficiency while maintaining robust security. By leveraging real-time power measurements and FPGA prototyping, my work aims to uncover and mitigate vulnerabilities arising from power side channels, contributing to the development of more secure and trustworthy hardware systems.</p>
+      <ul>
+      </ul>
+    </section>
+
+    
+    <section id="experience-and-leadership">
+      <h2><i class="fas fa-route"></i> Engineering Journey</h2>
+      <p>
+        My engineering journey has always been about getting my hands dirty at the intersection of hardware and software. It started at the University of Tabriz, where I first worked with FPGAs to explore dynamic reconfiguration methods. From there, I jumped into the RISC-V ecosystem as an intern, designing Coarse-Grained Reconfigurable Architectures (CGRAs) and writing C/C++ software to get embedded CPUs up and running. 
+      </p>
+      <p>
+        Building on that foundation, I relocated to Portugal to join the University of Lisbon as a Research Assistant. There, I tackled high-throughput PCIe-FPGA interfaces using RIFFA and successfully ported the RNNoise deep learning audio filter directly onto hardware. During this time, I also spent a highly rewarding period at IObundle, Lda, working as an Embedded Hardware Developer where I contributed to hardware-software integration and repository maintenance alongside my adviser. Later I joined Binghamton University to continue my PhD studies.
+      </p>
+      <p>
+        Beyond my technical work, I firmly believe that innovation means little if we aren't sharing it with the community. I genuinely love breaking down complex technology for younger students. As a STEM volunteer in local Binghamton school districts, I put Raspberry Pis and FPGAs directly into the hands of elementary and middle schoolers to show them what they are capable of building. To keep that momentum going outside the classroom, I collaborate with our team to produce YouTube tutorials and maintain a university-hosted project website.
+      </p>
+      <p>
+        Within the academic community, I also enjoy doing my part behind the scenes. I care deeply about the student experience at Binghamton University. Having been elected to the Student Advisory Committees for both the School of Computing and the Watson College Dean, I work directly with university leadership to turn actual student feedback into tangible, actionable policy improvements.
+      </p>
+    </section>
+
+   
+
+    <section id="personal">
+      <h2><i class="fas fa-camera-retro"></i> Life Outside the Lab</h2>
+      <p>
+When I step away from hardware debugging and compiler development, I enjoy spending time exploring the world beyond my desk. Traveling to new places, being outdoors, and capturing moments through photography help me slow down and see things from different perspectives. These experiences often remind me that curiosity, observation, and patience matter just as much in life as they do in research. They give me a chance to reflect, appreciate the people and places around me, and find inspiration in everyday moments. Here are a few snapshots from my life outside of academia.      </p>
+      
+      <div class="gallery-container">
+        <img class="gallery-item" src="1.jpg" alt="Personal Photo 1">
+        <img class="gallery-item" src="2.jpg" alt="Personal Photo 2">
+        <img class="gallery-item" src="3.jpg" alt="Personal Photo 3">
+        <img class="gallery-item" src="4.jpg" alt="Personal Photo 4">
+        <img class="gallery-item" src="5.jpg" alt="Personal Photo 5">
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2><i class="fas fa-envelope"></i> Contact</h2>
+      <p>
+        You can reach me via email or find more about me on my GitHub and LinkedIn profiles.
+      </p>
+    
+      <div class="contact-icons">
+        <a href="mailto:bjoudat1@binghamton.edu" title="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/behzadjoudat" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://github.com/behzadjoudat" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+
+    </section>
+  </main>
+  <div id="visit-count" style="display:none; font-size: 0.9rem; color: #555; text-align:center;"></div>
+
+  <footer>
+    © <span id="year">2026</span> Behzad Joudat
+  </footer>
+
+  <div id="imageModal" class="modal">
+    <span class="close-modal" id="closeModalBtn">&times;</span>
+    <img class="modal-content" id="expandedImg">
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+    // Only show visit count if ?admin is in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAdmin = urlParams.has('admin'); // e.g. yoursite.com/?admin
+
+    fetch('https://api.countapi.xyz/hit/my-github-portfolio/visits')
+      .then(res => res.json())
+      .then(data => {
+        if (isAdmin) {
+          const counter = document.getElementById('visit-count');
+          counter.textContent = `Total Visits: ${data.value}`;
+          counter.style.display = 'block';
+        }
+      })
+      .catch(err => console.error('Error fetching visit count:', err));
+  </script>
+
+  <script>
+    // Get the modal and the image inside it
+    var modal = document.getElementById("imageModal");
+    var modalImg = document.getElementById("expandedImg");
+
+    // Get all gallery images
+    var images = document.querySelectorAll(".gallery-item");
+
+    // Loop through images and add click event
+    images.forEach(function(img) {
+      img.onclick = function() {
+        modal.style.display = "flex"; // Use flex to center easily
+        modalImg.src = this.src; // Set the modal image to the clicked image's source
+      }
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("closeModalBtn");
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() { 
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside the image, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
 </body>
 </html>
