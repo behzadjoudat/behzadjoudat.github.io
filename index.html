@@ -2,100 +2,272 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Behzad Joudat — Academic Portfolio</title>
+  <meta name="description" content="Behzad Joudat — PhD candidate in Computer Science. FPGA design, embedded systems, and hardware security." />
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  <!-- External CSS -->
-  <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* Dynamic Margins and Width Constraints */
+    :root {
+      --paper:        #f6f7f9;
+      --paper-raised: #ffffff;
+      --ink:          #15181d;
+      --ink-soft:     #4b5563;
+      --ink-faint:    #8a93a0;
+      --line:         #e3e7ec;
+      --line-strong:  #cdd4db;
+      --navy:         #21385a;
+      --navy-deep:    #16263f;
+
+      --serif: "Spectral", Georgia, "Times New Roman", serif;
+      --sans:  "Inter", system-ui, -apple-system, sans-serif;
+      --mono:  "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+      --wrap: 1800px;
+      --gut:  clamp(1.25rem, 3vw, 3rem);
+      --rail: clamp(150px, 18vw, 240px);
+      --rail-gap: clamp(1.5rem, 4vw, 3.25rem);
+      --measure: 120ch;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      padding: 0;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1.0625rem;
+      line-height: 1.72;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    /* Limits the maximum width for readability and centers the content */
-    .navbar, header#home, main, footer {
-      max-width:  1200;
-      margin: 0 auto;
-      padding-left: 10vw;  /* Dynamic spacing that scales with screen size */
-      padding-right: 10vw;
-    }
+    .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gut); }
 
-    /* Gallery Grid Styles */
-    .gallery-container {
+    a { color: var(--navy); text-decoration: none; }
+    a:hover { color: var(--navy-deep); }
+
+    p { color: var(--ink-soft); }
+    p strong { color: var(--ink); font-weight: 600; }
+
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; color: var(--ink); letter-spacing: -0.01em; }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin: 0 0 .9rem;
+      display: flex; align-items: center; gap: .7rem;
+      max-width: var(--measure);
+    }
+    .eyebrow::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+    :focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; border-radius: 2px; }
+
+    /* ---------------- Nav ---------------- */
+    .navbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(246,247,249,.88);
+      backdrop-filter: saturate(140%) blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .navbar .wrap {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; min-height: 60px; flex-wrap: wrap;
+    }
+    .nav-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: clamp(.6rem, 2.4vw, 1.7rem); flex-wrap: wrap; }
+    .nav-links a {
+      font-family: var(--mono); font-size: .76rem; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--ink-soft); padding: .25rem 0;
+      border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
+      display: flex; align-items: center; gap: .35em;
+    }
+    .nav-links a i { font-size: .8em; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active { color: var(--ink); border-bottom-color: var(--navy); }
+
+    /* ---------------- Hero ---------------- */
+    header#home { padding-top: clamp(3rem, 7vw, 5.5rem); padding-bottom: clamp(2.5rem, 5vw, 4rem); }
+    .hero {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
+      grid-template-columns: var(--rail) minmax(0, 1fr);
+      gap: var(--rail-gap); align-items: start;
     }
-
-    .gallery-item {
+    .portrait {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: relative; aspect-ratio: 4/5; border-radius: 6px; overflow: hidden;
+      background: #e7ebef; border: 1px solid var(--line-strong);
+      box-shadow: 0 1px 0 #fff inset, 0 14px 30px -18px rgba(22,38,63,.45);
+    }
+    .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .portrait.missing::after {
+      content: "B.J."; position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: var(--serif); font-size: 2.4rem; color: var(--ink-faint);
+      background: repeating-linear-gradient(135deg,#eef1f4 0 12px,#e9edf1 12px 24px);
+    }
+    .hero-text { min-width: 0; max-width: var(--measure); }
+    .hero h1 { font-size: clamp(2.3rem, 5.2vw, 3.2rem); line-height: 1.04; margin: .1rem 0 .6rem; }
+    .role {
+      font-family: var(--mono); font-size: .8rem; letter-spacing: .04em;
+      color: var(--navy); margin: 0 0 1.4rem; line-height: 1.6;
+    }
+    .lede { font-size: 1.12rem; line-height: 1.78; max-width: var(--measure); margin: 0 0 1rem; }
+
+    /* Two-up panels */
+    .panels { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); margin-top: 2.6rem; }
+    .panel { min-width: 0; }
+    .panel h2 {
+      font-size: 1.05rem; margin: 0 0 1rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .panel h2 i { color: var(--navy); font-size: .85em; }
+    .panel ul { list-style: none; margin: 0; padding: 0; }
+
+    .interests li {
+      padding: .5rem 0; border-bottom: 1px solid var(--line);
+      color: var(--ink); font-size: 1rem;
+    }
+    .interests li:last-child { border-bottom: 0; }
+
+    .skills li { margin-bottom: 1rem; font-size: .95rem; color: var(--ink-soft); }
+    .skills .k {
+      display: block; font-family: var(--mono); font-size: .68rem; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--ink-faint); margin-bottom: .35rem;
+    }
+    .skills .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .skills .tag {
+      font-family: var(--mono); font-size: .76rem; color: var(--ink);
+      background: var(--paper-raised); border: 1px solid var(--line-strong);
+      border-radius: 3px; padding: .18rem .5rem; line-height: 1.4;
     }
 
-    .gallery-item:hover {
-      transform: scale(1.03);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    /* ---------------- Sections ---------------- */
+    main { padding-bottom: 2rem; }
+    .section {
+      padding-block: clamp(2rem, 7vw, 5rem);
+      padding-left: calc(var(--rail) + var(--rail-gap));
+      border-top: 1px solid var(--line);
+      scroll-margin-top: 72px;
+    }
+    .section-heading {
+      font-size: clamp(1.5rem, 3.2vw, 2rem); margin: 0 0 1.2rem;
+      display: flex; align-items: center; gap: .55rem; max-width: var(--measure);
+    }
+    .section-heading i { color: var(--navy); font-size: .75em; }
+    .prose { max-width: var(--measure); }
+    .prose p + p { margin-top: 1.1rem; }
+
+    .aside { margin-top: 2.6rem; max-width: var(--measure); }
+    .aside h3 { font-size: 1.1rem; margin: 0 0 .5rem; }
+
+    /* ---------------- Gallery ---------------- */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px; margin-top: 1.8rem; max-width: var(--measure);
+    }
+    .shot {
+      position: relative; aspect-ratio: 1/1; border: 0; padding: 0; cursor: zoom-in;
+      border-radius: 6px; overflow: hidden; background: #e7ebef;
+      box-shadow: 0 4px 12px -8px rgba(22,38,63,.35);
+      transition: box-shadow .25s ease;
+    }
+    .shot:hover { box-shadow: 0 8px 24px -10px rgba(22,38,63,.45); }
+    .shot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+    .shot:hover img { transform: scale(1.05); }
+    .shot.missing::after {
+      content: attr(data-label); position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; color: var(--ink-faint);
+      background: repeating-linear-gradient(135deg,#eef1f4 0 10px,#e9edf1 10px 20px);
     }
 
-    /* Lightbox (Modal) Styles */
+    /* ---------------- Contact ---------------- */
+    .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; margin-top: 1.4rem; }
+    .contact-icons { display: flex; gap: 1rem; }
+    .contact-icons a {
+      width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%;
+      border: 1px solid var(--line-strong); color: var(--ink-soft); font-size: 1.1rem;
+      background: #fff; transition: color .15s, border-color .15s, transform .15s;
+    }
+    .contact-icons a:hover { color: var(--navy); border-color: var(--navy); transform: translateY(-2px); }
+    .mail-link { font-family: var(--mono); font-size: .9rem; word-break: break-word; }
+
+    /* ---------------- Footer ---------------- */
+    footer { border-top: 1px solid var(--line); }
+    footer .wrap {
+      padding-block: 1.8rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: .6rem;
+      font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; color: var(--ink-faint);
+    }
+
+    /* ---------------- Lightbox ---------------- */
     .modal {
-      display: none; 
-      position: fixed; 
-      z-index: 1000; 
-      padding-top: 50px; 
-      left: 0;
-      top: 0;
-      width: 100%; 
-      height: 100%; 
-      overflow: auto; 
-      background-color: rgba(0,0,0,0.85); 
-      backdrop-filter: blur(5px);
+      position: fixed; inset: 0; z-index: 1000; display: none;
+      background: rgba(15,20,28,.9); backdrop-filter: blur(5px);
+      align-items: center; justify-content: center; padding: 4vmin;
     }
-
-    .modal-content {
-      margin: auto;
-      display: block;
-      max-width: 80%;
-      max-height: 80vh;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      animation: zoomIn 0.3s ease;
+    .modal.open { display: flex; }
+    .modal img {
+      max-width: 88vw; max-height: 82vh; border-radius: 6px;
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,.7);
+      animation: zoomIn .25s ease;
     }
-
     @keyframes zoomIn {
-      from {transform: scale(0.9); opacity: 0;}
-      to {transform: scale(1); opacity: 1;}
+      from { transform: scale(0.93); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+    .modal-close, .modal-nav {
+      position: absolute; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.25);
+      color: #fff; cursor: pointer; border-radius: 6px; transition: background .15s;
+    }
+    .modal-close:hover, .modal-nav:hover { background: rgba(255,255,255,.2); }
+    .modal-close { top: 4vmin; right: 4vmin; width: 44px; height: 44px; font-size: 1.4rem; line-height: 1; }
+    .modal-nav { top: 50%; transform: translateY(-50%); width: 48px; height: 60px; font-size: 1.4rem; }
+    .modal-nav.prev { left: 3vmin; }
+    .modal-nav.next { right: 3vmin; }
+
+    /* ---------------- Reveal ---------------- */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---------------- Responsive ---------------- */
+    @media (max-width: 900px) {
+      :root { --rail: clamp(140px, 20vw, 190px); --rail-gap: clamp(1.25rem, 3.5vw, 2.25rem); }
+    }
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      .portrait { max-width: 200px; }
+      .hero-text { max-width: none; }
+      .section { padding-left: 0; }
+      .gallery { max-width: none; }
+      .panels { grid-template-columns: 1fr; }
+      .navbar .wrap { min-height: auto; padding-block: .7rem; }
+      .nav-links { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .modal-nav.prev { left: 1.5vmin; }
+      .modal-nav.next { right: 1.5vmin; }
     }
 
-    .close-modal {
-      position: absolute;
-      top: 20px;
-      right: 40px;
-      color: #f1f1f1;
-      font-size: 40px;
-      font-weight: bold;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-
-    .close-modal:hover,
-    .close-modal:focus {
-      color: #bbb;
-      text-decoration: none;
-      cursor: pointer;
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .shot img { transition: none; }
+      * { animation: none !important; }
     }
   </style>
 </head>
@@ -103,169 +275,257 @@
 <body>
 
   <nav class="navbar">
-    <div class="nav-left">
-      <span class="nav-title">Behzad Joudat</span>
-    </div>
-
-    <div class="nav-center">
-      <a href="#home"><i class="fas fa-house"></i> Home</a>
-      <a href="#research"><i class="fas fa-lightbulb"></i> Research</a>
-      <a href="#experience-and-leadership"><i class="fas fa-route"></i> Journey</a>
-      <a href="#personal"><i class="fas fa-camera-retro"></i> Personal</a>
-      <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    <div class="wrap">
+      <span class="nav-title">Welcome to My Website</span>
+      <div class="nav-links">
+        <a href="#home"><i class="fas fa-house"></i> Home</a>
+        <a href="#research"><i class="fas fa-lightbulb"></i> Research</a>
+        <a href="#journey"><i class="fas fa-route"></i> Journey</a>
+        <a href="#personal"><i class="fas fa-camera-retro"></i> Personal</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
     </div>
   </nav>
 
   <header id="home">
-    <div class="header-left">
-      <img src="behzad1.jpg" alt="Behzad Joudat Photo">
-    </div>
+    <div class="wrap hero">
+      <div class="portrait" id="portrait">
+        <img src="behzad1.jpg" alt="Portrait of Behzad Joudat" />
+      </div>
 
-    <div class="header-center">
-      <h1>About Me</h1>
-      <p class="subtitle">PhD Candidate · Computer Science · FPGA Design & Embedded Systems · Hardware Security</p>
+      <div class="hero-text">
+        <p class="eyebrow">About</p>
+        <h1>Behzad Joudat</h1>
+        <p class="role">PhD Candidate · Computer Science<br>FPGA Design &amp; Embedded Systems · Hardware Security</p>
 
-      <p class="about-inline">
-      Welcome to my Webpage. I am Behzad Joudat, a Ph.D. candidate in Computer Science with an emphasis on Hardware Security at Thomas J. Watson School of Engineering and Applied Science, Binghamton University.
-<br> With over five years of experience in hardware and embedded systems engineering, I specialize in FPGA design, system verification, and hardware acceleration for machine learning. Skilled in C, Python, VHDL, Verilog, Vivado, and Quartus, I develop high-performance, power-efficient solutions that seamlessly bridge software and hardware.
-      </p>
-      <h2><i class="fas fa-flask"></i> Research Interests</h2>
-      <ul>
-        <li>Computer Architecture</li>
-        <li>Embedded Systems</li>
-        <li>Hardware Security</li>
-        <li>ASIC & FPGA design</li>
-        <li>Microarchitectural Side-Channels</li>
-      </ul>
+        <p class="lede">
+          I am a Ph.D. candidate in Computer Science with an emphasis on hardware security at the
+          Thomas J. Watson School of Engineering and Applied Science, Binghamton University.
+        </p>
+        <p>
+          With over five years in hardware and embedded systems engineering, I work on FPGA design,
+          system verification, and hardware acceleration for machine learning. I build high-performance,
+          power-efficient solutions that bridge software and hardware — in C, C++, Python, VHDL, Verilog,
+          Vivado, and Quartus.
+        </p>
 
-      <h2><i class="fas fa-code"></i> Technical Skills</h2>
-      <ul>
-        <li><strong>Languages:</strong> C, C++, Python, VHDL, Verilog, SystemVerilog</li>
-        <li><strong>Tools:</strong> OpenVino, Vivado (Xilinx), Quartus, Git, FPGA design and verification, TCL, Make/CMake, Shell, RTL</li>
-        <li><strong>Additional:</strong> Reconfigurable Architectures, Embedded system, OpenCL, Machine Learning, Firmware</li>
-      </ul>
+        <div class="panels">
+          <div class="panel interests">
+            <h2><i class="fas fa-flask"></i> Research Interests</h2>
+            <ul>
+              <li>Computer Architecture</li>
+              <li>Embedded Systems</li>
+              <li>Hardware Security</li>
+              <li>ASIC &amp; FPGA Design</li>
+              <li>Microarchitectural Side-Channels</li>
+            </ul>
+          </div>
 
+          <div class="panel skills">
+            <h2><i class="fas fa-code"></i> Technical Skills</h2>
+            <ul>
+              <li>
+                <span class="k">Languages</span>
+                <span class="tags">
+                  <span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span>
+                  <span class="tag">VHDL</span><span class="tag">Verilog</span><span class="tag">SystemVerilog</span>
+                </span>
+              </li>
+              <li>
+                <span class="k">Tools</span>
+                <span class="tags">
+                  <span class="tag">Vivado</span><span class="tag">Quartus</span><span class="tag">OpenVINO</span>
+                  <span class="tag">Git</span><span class="tag">TCL</span><span class="tag">Make / CMake</span>
+                  <span class="tag">Shell</span><span class="tag">RTL</span>
+                </span>
+              </li>
+              <li>
+                <span class="k">Additional</span>
+                <span class="tags">
+                  <span class="tag">Reconfigurable Arch.</span><span class="tag">OpenCL</span>
+                  <span class="tag">Machine Learning</span><span class="tag">Firmware</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
-  <main>
-  
-  <section id="research">
-      <h2><i class="fas fa-lightbulb"></i> Research</h2>
-      <p>My recent research focuses on FPGA-based architectures, with an emphasis on power monitoring and side-channel attack analysis. I explore how hardware-level implementations can be optimized for performance and energy efficiency while maintaining robust security. By leveraging real-time power measurements and FPGA prototyping, my work aims to uncover and mitigate vulnerabilities arising from power side channels, contributing to the development of more secure and trustworthy hardware systems.</p>
-      <ul>
-      </ul>
-    </section>
+  <main class="wrap">
 
-    
-    <section id="experience-and-leadership">
-      <h2><i class="fas fa-route"></i> Engineering Journey</h2>
-      <p>
-        My engineering journey has always been about getting my hands dirty at the intersection of hardware and software. It started at the University of Tabriz, where I first worked with FPGAs to explore dynamic reconfiguration methods. From there, I jumped into the RISC-V ecosystem as an intern, designing Coarse-Grained Reconfigurable Architectures (CGRAs) and writing C/C++ software to get embedded CPUs up and running. 
-      </p>
-      <p>
-        Building on that foundation, I relocated to Portugal to join the University of Lisbon as a Research Assistant. There, I tackled high-throughput PCIe-FPGA interfaces using RIFFA and successfully ported the RNNoise deep learning audio filter directly onto hardware. During this time, I also spent a highly rewarding period at IObundle, Lda, working as an Embedded Hardware Developer where I contributed to hardware-software integration and repository maintenance alongside my adviser. Later I joined Binghamton University to continue my PhD studies.
-      </p>
-      <p>
-        Beyond my technical work, I firmly believe that innovation means little if we aren't sharing it with the community. I genuinely love breaking down complex technology for younger students. As a STEM volunteer in local Binghamton school districts, I put Raspberry Pis and FPGAs directly into the hands of elementary and middle schoolers to show them what they are capable of building. To keep that momentum going outside the classroom, I collaborate with our team to produce YouTube tutorials and maintain a university-hosted project website.
-      </p>
-      <p>
-        Within the academic community, I also enjoy doing my part behind the scenes. I care deeply about the student experience at Binghamton University. Having been elected to the Student Advisory Committees for both the School of Computing and the Watson College Dean, I work directly with university leadership to turn actual student feedback into tangible, actionable policy improvements.
-      </p>
-    </section>
-
-   
-
-    <section id="personal">
-      <h2><i class="fas fa-camera-retro"></i> Life Outside the Lab</h2>
-      <p>
-When I step away from hardware debugging and compiler development, I enjoy spending time exploring the world beyond my desk. Traveling to new places, being outdoors, and capturing moments through photography help me slow down and see things from different perspectives. These experiences often remind me that curiosity, observation, and patience matter just as much in life as they do in research. They give me a chance to reflect, appreciate the people and places around me, and find inspiration in everyday moments. Here are a few snapshots from my life outside of academia.      </p>
-      
-      <div class="gallery-container">
-        <img class="gallery-item" src="1.jpg" alt="Personal Photo 1">
-        <img class="gallery-item" src="2.jpg" alt="Personal Photo 2">
-        <img class="gallery-item" src="3.jpg" alt="Personal Photo 3">
-        <img class="gallery-item" src="4.jpg" alt="Personal Photo 4">
-        <img class="gallery-item" src="5.jpg" alt="Personal Photo 5">
+    <section id="research" class="section reveal">
+      <p class="eyebrow">Research</p>
+      <h2 class="section-heading"><i class="fas fa-lightbulb"></i> Securing hardware from the power up</h2>
+      <div class="prose">
+        <p>
+          My recent work focuses on FPGA-based architectures, with an emphasis on power monitoring and
+          side-channel attack analysis. I study how hardware-level implementations can be optimized for
+          performance and energy efficiency while remaining secure.
+        </p>
+        <p>
+          By combining real-time power measurements with FPGA prototyping, the goal is to uncover and
+          mitigate vulnerabilities that arise from power side channels — and, in turn, to build hardware
+          that is more trustworthy by design.
+        </p>
       </div>
     </section>
 
-    <section id="contact">
-      <h2><i class="fas fa-envelope"></i> Contact</h2>
-      <p>
-        You can reach me via email or find more about me on my GitHub and LinkedIn profiles.
-      </p>
-    
-      <div class="contact-icons">
-        <a href="mailto:bjoudat1@binghamton.edu" title="Email"><i class="fa-solid fa-envelope"></i></a>
-        <a href="https://www.linkedin.com/in/behzadjoudat" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://github.com/behzadjoudat" title="GitHub"><i class="fa-brands fa-github"></i></a>
+    <section id="journey" class="section reveal">
+      <p class="eyebrow">Journey</p>
+      <h2 class="section-heading"><i class="fas fa-route"></i> Engineering Journey</h2>
+      <div class="prose">
+        <p>
+          My engineering journey has always been about getting my hands dirty at the intersection of hardware and software. It started at the University of Tabriz, where I first worked with FPGAs to explore dynamic reconfiguration methods. From there, I jumped into the RISC-V ecosystem as an intern, designing Coarse-Grained Reconfigurable Architectures (CGRAs) and writing C/C++ software to get embedded CPUs up and running.
+        </p>
+        <p>
+          Building on that foundation, I relocated to Portugal to join the University of Lisbon as a Research Assistant. There, I tackled high-throughput PCIe-FPGA interfaces using RIFFA and successfully ported the RNNoise deep learning audio filter directly onto hardware. During this time, I also spent a highly rewarding period at IObundle, Lda, working as an Embedded Hardware Developer where I contributed to hardware-software integration and repository maintenance alongside my adviser. Later I joined Binghamton University to continue my PhD studies.
+        </p>
       </div>
 
+      <div class="aside prose">
+        <h3>Beyond the lab &amp; Service</h3>
+        <p>
+          Beyond my technical work, I firmly believe that innovation means little if we aren't sharing it with the community. I genuinely love breaking down complex technology for younger students. As a STEM volunteer in local Binghamton school districts, I put Raspberry Pis and FPGAs directly into the hands of elementary and middle schoolers to show them what they are capable of building. To keep that momentum going outside the classroom, I collaborate with our team to produce YouTube tutorials and maintain a university-hosted project website.
+        </p>
+        <p>
+          Within the academic community, I also enjoy doing my part behind the scenes. I care deeply about the student experience at Binghamton University. Having been elected to the Student Advisory Committees for both the School of Computing and the Watson College Dean, I work directly with university leadership to turn actual student feedback into tangible, actionable policy improvements.
+        </p>
+      </div>
     </section>
+
+    <section id="personal" class="section reveal">
+      <p class="eyebrow">Personal</p>
+      <h2 class="section-heading"><i class="fas fa-camera-retro"></i> Life Outside the Lab</h2>
+      <div class="prose">
+        <p>
+          When I step away from hardware debugging and compiler development, I like exploring the world beyond
+          my desk. Travel, the outdoors, and photography help me slow down and see things from new
+          perspectives — reminders that curiosity, observation, and patience matter as much in life as in
+          research. A few snapshots from outside academia:
+        </p>
+      </div>
+
+      <div class="gallery" id="gallery">
+        <button class="shot" data-label="01"><img src="1.jpg" alt="Personal photo 1" /></button>
+        <button class="shot" data-label="02"><img src="2.jpg" alt="Personal photo 2" /></button>
+        <button class="shot" data-label="03"><img src="3.jpg" alt="Personal photo 3" /></button>
+        <button class="shot" data-label="04"><img src="4.jpg" alt="Personal photo 4" /></button>
+        <button class="shot" data-label="05"><img src="5.jpg" alt="Personal photo 5" /></button>
+      </div>
+    </section>
+
+    <section id="contact" class="section reveal">
+      <p class="eyebrow">Contact</p>
+      <h2 class="section-heading"><i class="fas fa-envelope"></i> Get in touch</h2>
+      <div class="prose">
+        <p>Reach me by email, or find more of my work on GitHub and LinkedIn.</p>
+      </div>
+      <div class="contact-row">
+        <a class="mail-link" href="mailto:bjoudat1@binghamton.edu">bjoudat1@binghamton.edu</a>
+        <div class="contact-icons">
+          <a href="mailto:bjoudat1@binghamton.edu" title="Email" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+          <a href="https://www.linkedin.com/in/behzadjoudat" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://github.com/behzadjoudat" title="GitHub" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+    </section>
+
   </main>
-  <div id="visit-count" style="display:none; font-size: 0.9rem; color: #555; text-align:center;"></div>
 
   <footer>
-    © <span id="year">2026</span> Behzad Joudat
+    <div class="wrap">
+      <span>© <span id="year">2026</span> Behzad Joudat</span>
+      <span>FPGA · Embedded · Hardware Security</span>
+    </div>
   </footer>
 
-  <div id="imageModal" class="modal">
-    <span class="close-modal" id="closeModalBtn">&times;</span>
-    <img class="modal-content" id="expandedImg">
+  <!-- Lightbox -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="modal-close" id="mClose" aria-label="Close">&times;</button>
+    <button class="modal-nav prev" id="mPrev" aria-label="Previous image">&#8249;</button>
+    <img id="mImg" alt="" />
+    <button class="modal-nav next" id="mNext" aria-label="Next image">&#8250;</button>
   </div>
 
   <script>
+    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 
-  <script>
-    // Only show visit count if ?admin is in the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const isAdmin = urlParams.has('admin'); // e.g. yoursite.com/?admin
-
-    fetch('https://api.countapi.xyz/hit/my-github-portfolio/visits')
-      .then(res => res.json())
-      .then(data => {
-        if (isAdmin) {
-          const counter = document.getElementById('visit-count');
-          counter.textContent = `Total Visits: ${data.value}`;
-          counter.style.display = 'block';
-        }
-      })
-      .catch(err => console.error('Error fetching visit count:', err));
-  </script>
-
-  <script>
-    // Get the modal and the image inside it
-    var modal = document.getElementById("imageModal");
-    var modalImg = document.getElementById("expandedImg");
-
-    // Get all gallery images
-    var images = document.querySelectorAll(".gallery-item");
-
-    // Loop through images and add click event
-    images.forEach(function(img) {
-      img.onclick = function() {
-        modal.style.display = "flex"; // Use flex to center easily
-        modalImg.src = this.src; // Set the modal image to the clicked image's source
-      }
+    // Graceful image fallbacks
+    document.getElementById('portrait')?.querySelector('img')?.addEventListener('error', function () {
+      this.style.display = 'none';
+      this.closest('.portrait').classList.add('missing');
+    });
+    document.querySelectorAll('#gallery .shot img').forEach(function (img) {
+      img.addEventListener('error', function () {
+        this.style.display = 'none';
+        this.closest('.shot').classList.add('missing');
+      });
     });
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementById("closeModalBtn");
+    // Scroll-spy
+    var links = Array.from(document.querySelectorAll('.nav-links a'));
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          (byId[e.target.id] || {}).classList && byId[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['home','research','journey','personal','contact'].forEach(function (id) {
+      var el = document.getElementById(id); if (el) spy.observe(el);
+    });
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() { 
-      modal.style.display = "none";
+    // Scroll reveal
+    var revealer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); revealer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealer.observe(el); });
+
+    // Lightbox
+    var shots   = Array.from(document.querySelectorAll('#gallery .shot'));
+    var modal   = document.getElementById('modal');
+    var mImg    = document.getElementById('mImg');
+    var current = 0, lastFocus = null;
+
+    function srcOf(i) { return shots[i].querySelector('img').getAttribute('src'); }
+    function altOf(i) { return shots[i].querySelector('img').getAttribute('alt') || ''; }
+
+    function openModal(i) {
+      if (shots[i].classList.contains('missing')) return;
+      current = i; lastFocus = document.activeElement;
+      mImg.src = srcOf(i); mImg.alt = altOf(i);
+      modal.classList.add('open');
+      document.getElementById('mClose').focus();
+    }
+    function closeModal() {
+      modal.classList.remove('open'); mImg.src = '';
+      if (lastFocus) lastFocus.focus();
+    }
+    function step(d) {
+      var n = shots.length, i = current;
+      do { i = (i + d + n) % n; } while (shots[i].classList.contains('missing') && i !== current);
+      openModal(i);
     }
 
-    // When the user clicks anywhere outside the image, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
+    shots.forEach(function (s, i) { s.addEventListener('click', function () { openModal(i); }); });
+    document.getElementById('mClose').addEventListener('click', closeModal);
+    document.getElementById('mPrev').addEventListener('click', function () { step(-1); });
+    document.getElementById('mNext').addEventListener('click', function () { step(1); });
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
   </script>
 
 </body>
